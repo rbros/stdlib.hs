@@ -119,6 +119,7 @@ module StdLib (
     , txtunpack
     , ltxtpack
     , ltxtunpack
+    , txt2ltxt
     , txt2bs
     , bs2txt
     , lbs2txt
@@ -478,6 +479,9 @@ ltxtpack = TL.pack
 
 ltxtunpack :: LText -> Prelude.String
 ltxtunpack = TL.unpack
+
+txt2ltxt :: Text -> LText
+txt2ltxt = TL.fromStrict
 
 txt2bs :: Text -> ByteString
 txt2bs = T.encodeUtf8
