@@ -1,0 +1,25 @@
+# HLint configuration file
+# https://github.com/ndmitchell/hlint
+##########################
+
+- ignore: {name: "Redundant do"}
+- ignore: {name: "Use panic"}
+- ignore: {name: "Use record patterns"}
+- ignore: {name: "Use camelCase"}
+- ignore: {name: "Eta reduce"}
+- ignore: {name: "Use <$>"}
+
+- error:
+    lhs: fromMaybe ""
+    rhs: panic "location of the call"
+    note: "Hurts totality and hard to debug"
+
+- error:
+    lhs: fromMaybe (show a)
+    rhs: panic "location of the call"
+    note: "Hurts totality and hard to debug"
+
+- error:
+    lhs: fromMaybe (tshow a)
+    rhs: panic "location of the call"
+    note: "Hurts totality and hard to debug"

@@ -1,0 +1,35 @@
+name:                stdlib
+version:             0.1.0.0
+github:              "rbros/stdlib"
+author:              "Christopher & Cody Reichert (Reichert Brothers)"
+maintainer:          "christopher@reichertbrothers.com"
+copyright:           "2018 Reichert Brothers"
+
+extra-source-files:
+  - README.md
+
+default-extensions:
+  - NoImplicitPrelude
+
+dependencies:
+  - base >= 4.7 && < 5
+  - bytestring
+  - text
+  - directory
+  - filepath
+  - process
+  #- random
+  - time
+  - containers
+  - transformers
+  - mtl
+  - case-insensitive
+  - async
+
+library:
+  source-dirs: src
+  ghc-options:
+    - -Wall
+    - -fno-warn-unused-do-bind
+    - -fwarn-incomplete-uni-patterns
+    - -fwarn-incomplete-record-updates
