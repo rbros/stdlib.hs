@@ -7,8 +7,8 @@
 --
 -- $license
 
-module StdLib
-    (
+module StdLib (
+
       identity
     , (&)
     , uncons
@@ -122,7 +122,7 @@ module StdLib
     , txt2bs
     , bs2txt
     , lbs2txt
-    , ltxt2bs
+    , ltxt2lbs
     , bs2ltxt
     , lbs2bs
     , bs2lbs
@@ -231,6 +231,7 @@ import Data.Time.Clock.POSIX
 import Data.Traversable            as X
 import Data.Tuple                  as X
 import Data.Word                   as X
+import GHC.Enum                    as X (Enum (..))
 import GHC.Exts                    as X (Constraint, FunPtr, Ptr, the)
 import GHC.Float                   as X hiding (log)
 import GHC.Int                     as X
@@ -239,7 +240,9 @@ import GHC.Num                     as X
 import GHC.Real                    as X
 import GHC.Show                    as X
 import GHC.Stack
-import System.Directory            as X (doesFileExist, getCurrentDirectory,
+import Numeric                     as X (showHex)
+import System.Directory            as X (createDirectoryIfMissing,
+                                         doesFileExist, getCurrentDirectory,
                                          setCurrentDirectory)
 import System.Environment          as X (getArgs, getEnvironment, lookupEnv,
                                          setEnv)
@@ -275,7 +278,7 @@ applyN :: Int -> (a -> a) -> a -> a
 applyN n f = X.foldr (.) identity (X.replicate n f)
 
 print :: (MonadIO m, Show a) => a -> m ()
-print = io . P.print
+print = io . putStrLn . tshow
 
 io :: MonadIO m => IO a -> m a
 io = IO.liftIO
@@ -459,10 +462,10 @@ maybeToLeft :: r -> Maybe l -> Either l r
 maybeToLeft r = maybe (Right r) Left
 
 eitherToMaybe :: Either a b -> Maybe b
-eitherToMaybe (Left _) = Nothing
+eitherToMaybe (Left _)  = Nothing
 eitherToMaybe (Right r) = Just r
 
--- * Text
+-- * Text / ByteString
 
 txtpack :: Prelude.String -> Text
 txtpack = T.pack
@@ -485,13 +488,11 @@ bs2txt = T.decodeUtf8
 lbs2txt :: LByteString -> Text
 lbs2txt = TL.toStrict . TL.decodeUtf8
 
-ltxt2bs :: LText -> LByteString
-ltxt2bs = TL.encodeUtf8
+ltxt2lbs :: LText -> LByteString
+ltxt2lbs = TL.encodeUtf8
 
 bs2ltxt :: LByteString -> LText
 bs2ltxt = TL.decodeUtf8
-
--- * ByteString
 
 lbs2bs :: LByteString -> ByteString
 lbs2bs = BL.toStrict
