@@ -43,11 +43,13 @@ module StdLib (
 
       -- * Bool
 
+    , bool
     , whenM
     , unlessM
     , ifM
     , guardM
-    , bool
+    , while
+    , whileM
 
       -- * Debug
 
@@ -376,6 +378,22 @@ ifM p x y = p >>= \b -> if b then x else y
 
 guardM :: MonadPlus m => m Bool -> m ()
 guardM f = guard =<< f
+
+while :: Monad m => m Bool -> m a -> m ()
+while cond action = do
+    c <- cond
+    when c P.$ do
+        _ <- action
+        while cond action
+
+-- | While loop. run 'f' while 'p'
+whileM :: (MonadPlus m1, Monad m) => (a -> m Bool) -> m a -> m (m1 a)
+whileM p f = go
+  where
+    go = do
+      x <- f
+      r <- p x
+      if r then (return x `mplus`) `liftM` go else return mzero
 
 {-# WARNING undefined "'undefined' remains in code" #-}
 undefined :: a
