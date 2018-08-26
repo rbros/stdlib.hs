@@ -30,6 +30,7 @@ module StdLib (
     , nubOn
     , sortOn
     , count
+    , chunksOf
 
       -- * Show
 
@@ -309,6 +310,10 @@ nubOn f = fmap snd
 
 count :: Eq a => a -> [a] -> Int
 count x = length . filter (x ==)
+
+chunksOf :: Int -> [a] -> [[a]]
+chunksOf _ [] = []
+chunksOf n xs = take n xs : chunksOf n (drop n xs)
 
 -- * Show
 
