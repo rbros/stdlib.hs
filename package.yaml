@@ -1,5 +1,7 @@
 name:                stdlib
 version:             0.1.0.0
+license:             MIT
+license-file:        LICENSE
 github:              "rbros/stdlib"
 author:              "Christopher & Cody Reichert (Reichert Brothers)"
 maintainer:          "christopher@reichertbrothers.com"
@@ -18,7 +20,6 @@ dependencies:
   - directory
   - filepath
   - process
-  #- random
   - time
   - containers
   - transformers
