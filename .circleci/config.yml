@@ -12,7 +12,7 @@ references:
   restore_backend_stack_cache: &restore_backend_stack_cache
     restore_cache:
       keys:
-        - v1-cache-stack-{{ .Branch }}-{{ .Revision }}
+        - v1-cache-stack-{{ .Branch }}-{{ checksum "package.yaml" }}
         - v1-cache-stack-{{ .Branch }}
         - v1-cache-stack
 
