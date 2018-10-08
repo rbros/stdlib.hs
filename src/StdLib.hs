@@ -190,7 +190,6 @@ import Control.Applicative         as X (Alternative (..), Applicative (..),
                                          liftA2, liftA3, optional, (<**>))
 import Control.Concurrent          as X hiding (throwTo)
 import Control.Concurrent.Async    as Async
-import Control.Exception.Safe      as X hiding (Handler (..))
 import Control.Monad               hiding ((<$!>))
 import Control.Monad.Except        as X (Except, ExceptT, MonadError,
                                          catchError, runExcept, runExceptT,

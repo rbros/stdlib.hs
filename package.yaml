@@ -26,7 +26,6 @@ dependencies:
   - mtl
   - case-insensitive
   - async
-  - safe-exceptions
 
 library:
   source-dirs: src
