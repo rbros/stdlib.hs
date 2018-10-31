@@ -395,7 +395,7 @@ whileM p f = go
       if r then (return x `mplus`) `liftM` go else return mzero
 
 {-# WARNING undefined "'undefined' remains in code" #-}
-undefined :: a
+undefined :: HasCallStack => a
 undefined = P.undefined
 
 {-# WARNING error "'error' remains in code" #-}
