@@ -224,7 +224,7 @@ import           Data.List as X (break, drop, filter, intercalate, isPrefixOf,
 import           Data.List.NonEmpty as X (NonEmpty (..), nonEmpty)
 import           Data.Map as X (Map)
 import           Data.Maybe as X hiding (fromJust)
-import           Data.Monoid as X
+import           Data.Monoid as X hiding ((<>))
 import           Data.Ord as X
 import           Data.Semigroup as X hiding (First, Last, getFirst, getLast)
 import           Data.Sequence as X (Seq)
