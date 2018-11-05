@@ -1,5 +1,5 @@
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
@@ -163,99 +163,99 @@ module StdLib (
     , module X
     ) where
 
-import qualified Control.Monad.IO.Class     as IO (liftIO)
-import qualified Data.ByteString            as X (ByteString)
-import qualified Data.ByteString            as BS
-import qualified Data.ByteString.Char8      as BS8
+import qualified Control.Monad.IO.Class as IO (liftIO)
+import qualified Data.ByteString as X (ByteString)
+import qualified Data.ByteString as BS
+import qualified Data.ByteString.Char8 as BS8
 import qualified Data.ByteString.Lazy
-import qualified Data.ByteString.Lazy       as BL
+import qualified Data.ByteString.Lazy as BL
 import qualified Data.ByteString.Lazy.Char8 as BL8
-import qualified Data.CaseInsensitive       as CI
-import qualified Data.List                  as L
-import qualified Data.Map                   as Map
-import qualified Data.Set                   as Set
-import qualified Data.Text                  as T
-import qualified Data.Text.Encoding         as T
-import qualified Data.Text.IO               as T
+import qualified Data.CaseInsensitive as CI
+import qualified Data.List as L
+import qualified Data.Map as Map
+import qualified Data.Set as Set
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
+import qualified Data.Text.IO as T
 import qualified Data.Text.Lazy
-import qualified Data.Text.Lazy             as TL
-import qualified Data.Text.Lazy.Encoding    as TL
-import qualified Data.Text.Lazy.IO          as TL
-import qualified Debug.Trace                as T
-import qualified Prelude                    as P
+import qualified Data.Text.Lazy as TL
+import qualified Data.Text.Lazy.Encoding as TL
+import qualified Data.Text.Lazy.IO as TL
+import qualified Debug.Trace as T
+import qualified Prelude as P
 import qualified Prelude
 
-import Control.Applicative         as X (Alternative (..), Applicative (..),
-                                         Const (..), ZipList (..), liftA,
-                                         liftA2, liftA3, optional, (<**>))
-import Control.Concurrent          as X hiding (throwTo)
-import Control.Concurrent.Async    as Async
-import Control.Monad               hiding ((<$!>))
-import Control.Monad.Except        as X (Except, ExceptT, MonadError,
-                                         catchError, runExcept, runExceptT,
-                                         throwError)
-import Control.Monad.IO.Class      as X (MonadIO)
-import Control.Monad.Reader        as X (MonadReader, Reader, ReaderT, ask,
-                                         asks, local, runReader, runReaderT)
-import Control.Monad.ST            as X
-import Control.Monad.State         as X (MonadState, State, StateT, evalStateT,
-                                         execState, execStateT, get, gets,
-                                         modify, put, runStateT, withState)
-import Control.Monad.Trans         as X (MonadTrans (..), lift)
-import Control.Monad.Trans.Maybe   as X (runMaybeT)
-import Data.Bits                   as X
-import Data.Bool                   as X hiding (bool)
-import Data.ByteString             as X (ByteString)
-import Data.Char                   as X (Char, isSpace)
-import Data.Complex                as X
-import Data.Either                 as X
-import Data.Eq                     as X
-import Data.Foldable               as X hiding (foldl1, foldr1, maximum,
-                                         maximumBy, minimum, minimumBy)
-import Data.Function               as X (const, fix, flip, on, (.))
-import Data.Functor                as X (Functor (..), void, ($>), (<$>))
-import Data.Functor.Identity       as X
-import Data.Int                    as X
-import Data.IntMap                 as X (IntMap)
-import Data.IntSet                 as X (IntSet)
-import Data.List                   as X (break, drop, filter, intercalate,
-                                         isPrefixOf, replicate, reverse, sortBy,
-                                         splitAt, take)
-import Data.List.NonEmpty          as X (NonEmpty (..), nonEmpty)
-import Data.Map                    as X (Map)
-import Data.Maybe                  as X hiding (fromJust)
-import Data.Monoid                 as X
-import Data.Ord                    as X
-import Data.Sequence               as X (Seq)
-import Data.Set                    as X (Set)
-import Data.Text                   as X (Text)
-import Data.Time                   as X
-import Data.Time.Clock.POSIX
-import Data.Traversable            as X
-import Data.Tuple                  as X
-import Data.Word                   as X
-import GHC.Enum                    as X (Enum (..))
-import GHC.Exts                    as X (Constraint, FunPtr, Ptr, the)
-import GHC.Float                   as X hiding (log)
-import GHC.Int                     as X
-import GHC.IO                      as X (IO)
-import GHC.Num                     as X
-import GHC.Real                    as X
-import GHC.Show                    as X
-import GHC.Stack
-import Numeric                     as X (showHex)
-import System.Directory            as X (createDirectoryIfMissing,
-                                         doesFileExist, getCurrentDirectory,
-                                         setCurrentDirectory)
-import System.Environment          as X (getArgs, getEnvironment, lookupEnv,
-                                         setEnv)
-import System.Exit                 as X
-import System.FilePath             as X (FilePath, takeBaseName, (</>))
-import System.IO                   as X (BufferMode (..), Handle, hClose,
-                                         hFlush, hSetBinaryMode, hWaitForInput)
-import System.Process              as X (readProcess, readProcessWithExitCode)
-import Text.Printf                 as X (PrintfArg, hPrintf, printf)
-import Text.Read                   as X (Read, readEither, readMaybe, reads)
+import           Control.Applicative as X (Alternative (..), Applicative (..),
+                                           Const (..), ZipList (..), liftA,
+                                           liftA2, liftA3, optional, (<**>))
+import           Control.Concurrent as X hiding (throwTo)
+import           Control.Concurrent.Async as Async
+import           Control.Monad hiding ((<$!>))
+import           Control.Monad.Except as X (Except, ExceptT, MonadError,
+                                            catchError, runExcept, runExceptT,
+                                            throwError)
+import           Control.Monad.IO.Class as X (MonadIO)
+import           Control.Monad.Reader as X (MonadReader, Reader, ReaderT, ask,
+                                            asks, local, runReader, runReaderT)
+import           Control.Monad.ST as X
+import           Control.Monad.State as X (MonadState, State, StateT,
+                                           evalStateT, execState, execStateT,
+                                           get, gets, modify, put, runStateT,
+                                           withState)
+import           Control.Monad.Trans as X (MonadTrans (..), lift)
+import           Control.Monad.Trans.Maybe as X (runMaybeT)
+import           Data.Bits as X
+import           Data.Bool as X hiding (bool)
+import           Data.ByteString as X (ByteString)
+import           Data.Char as X (Char, isSpace)
+import           Data.Complex as X
+import           Data.Either as X
+import           Data.Eq as X
+import           Data.Foldable as X hiding (foldl1, foldr1, maximum, maximumBy,
+                                     minimum, minimumBy)
+import           Data.Function as X (const, fix, flip, on, (.))
+import           Data.Functor as X (Functor (..), void, ($>), (<$>))
+import           Data.Functor.Identity as X
+import           Data.Int as X
+import           Data.IntMap as X (IntMap)
+import           Data.IntSet as X (IntSet)
+import           Data.List as X (break, drop, filter, intercalate, isPrefixOf,
+                                 replicate, reverse, sortBy, splitAt, take)
+import           Data.List.NonEmpty as X (NonEmpty (..), nonEmpty)
+import           Data.Map as X (Map)
+import           Data.Maybe as X hiding (fromJust)
+import           Data.Monoid as X
+import           Data.Ord as X
+import           Data.Sequence as X (Seq)
+import           Data.Set as X (Set)
+import           Data.Text as X (Text)
+import           Data.Time as X
+import           Data.Time.Clock.POSIX
+import           Data.Traversable as X
+import           Data.Tuple as X
+import           Data.Word as X
+import           GHC.Enum as X (Enum (..))
+import           GHC.Exts as X (Constraint, FunPtr, Ptr, the)
+import           GHC.Float as X hiding (log)
+import           GHC.Int as X
+import           GHC.IO as X (IO)
+import           GHC.Num as X
+import           GHC.Real as X
+import           GHC.Show as X
+import           GHC.Stack
+import           Numeric as X (showHex)
+import           System.Directory as X (createDirectoryIfMissing, doesFileExist,
+                                        getCurrentDirectory,
+                                        setCurrentDirectory)
+import           System.Environment as X (getArgs, getEnvironment, lookupEnv,
+                                          setEnv)
+import           System.Exit as X
+import           System.FilePath as X (FilePath, takeBaseName, (</>))
+import           System.IO as X (BufferMode (..), Handle, hClose, hFlush,
+                                 hSetBinaryMode, hWaitForInput)
+import           System.Process as X (readProcess, readProcessWithExitCode)
+import           Text.Printf as X (PrintfArg, hPrintf, printf)
+import           Text.Read as X (Read, readEither, readMaybe, reads)
 
 type LText = Data.Text.Lazy.Text
 

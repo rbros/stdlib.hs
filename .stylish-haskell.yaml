@@ -22,7 +22,7 @@ steps:
   # occupies a single line.
   - simple_align:
       cases: false
-      top_level_patterns: true
+      top_level_patterns: false
       records: true
 
   # Import cleanup
@@ -42,7 +42,7 @@ steps:
       # - none: Do not perform any alignment.
       #
       # Default: global.
-      align: group
+      align: global
 
       # The following options affect only import list alignment.
       #
@@ -84,7 +84,7 @@ steps:
       #   >                                           init, last, length)
       #
       # Default: true
-      pad_module_names: true
+      pad_module_names: false
 
       # Long list align style takes effect when import is too
       # long. This is determined by 'columns' setting.
@@ -190,7 +190,7 @@ steps:
       #   space between actual import and closing bracket.
       #
       # Default: true
-      align: true
+      align: false
 
       # stylish-haskell can detect redundancy of some language
       # pragmas. If this is set to true, it will remove those
@@ -236,4 +236,6 @@ newline: native
 #
 # No language extensions are enabled by default.
 language_extensions:
-  - NoImplicitPrelude
+  - DeriveGeneric
+  - LambdaCase
+  - NamedFieldPuns
