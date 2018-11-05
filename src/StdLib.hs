@@ -226,6 +226,7 @@ import           Data.Map as X (Map)
 import           Data.Maybe as X hiding (fromJust)
 import           Data.Monoid as X
 import           Data.Ord as X
+import           Data.Semigroup as X hiding (First, Last, getFirst, getLast)
 import           Data.Sequence as X (Seq)
 import           Data.Set as X (Set)
 import           Data.Text as X (Text)
