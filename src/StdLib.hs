@@ -249,7 +249,7 @@ import           System.Directory as X (createDirectoryIfMissing, doesFileExist,
                                         getCurrentDirectory,
                                         setCurrentDirectory)
 import           System.Environment as X (getArgs, getEnvironment, lookupEnv,
-                                          setEnv)
+                                          setEnv, unsetEnv)
 import           System.Exit as X
 import           System.FilePath as X (FilePath, takeBaseName, (</>))
 import           System.IO as X (BufferMode (..), Handle, hClose, hFlush,
