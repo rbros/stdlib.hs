@@ -7,6 +7,8 @@ workflows:
     jobs:
       - build
       - build-nightly
+      - build-lts-14
+      - build-lts-13
       - build-lts-12
       - build-lts-11
       - build-lts-10
@@ -20,14 +22,14 @@ references:
   # Default branch / master
 
   default_cache_key: &default_cache_key
-    v2-stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
+    v3-stack-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
 
   restore_stack_default_cache: &restore_stack_default_cache
     restore_cache:
       keys:
         - *default_cache_key
-        - v2-stack-{{ checksum "stack.yaml" }}-
-        - v2-stack
+        - v3-stack-{{ checksum "stack.yaml" }}-
+        - v3-stack
 
   save_stack_default_cache: &save_stack_default_cache
     save_cache:
@@ -38,13 +40,13 @@ references:
   # nightly
 
   nightly_cache_key: &nightly_cache_key
-    v2-stack-nightly-{{ checksum "package.yaml" }}
+    v3-stack-nightly-{{ checksum "package.yaml" }}
 
   restore_stack_nightly_cache: &restore_stack_nightly_cache
     restore_cache:
       keys:
         - *nightly_cache_key
-        - v2-stack
+        - v3-stack
 
   save_stack_nightly_cache: &save_stack_nightly_cache
     save_cache:
@@ -52,16 +54,50 @@ references:
       paths:
         - ~/.stack
 
+  # lts-14
+
+  lts-14_cache_key: &lts-14_cache_key
+    v3-stack-lts-14-{{ checksum "package.yaml" }}
+
+  restore_stack_lts-14_cache: &restore_stack_lts-14_cache
+    restore_cache:
+      keys:
+        - *lts-14_cache_key
+        - v3-stack
+
+  save_stack_lts-14_cache: &save_stack_lts-14_cache
+    save_cache:
+      key: *lts-14_cache_key
+      paths:
+        - ~/.stack
+
+  # lts-13
+
+  lts-13_cache_key: &lts-13_cache_key
+    v3-stack-lts-13-{{ checksum "package.yaml" }}
+
+  restore_stack_lts-13_cache: &restore_stack_lts-13_cache
+    restore_cache:
+      keys:
+        - *lts-13_cache_key
+        - v3-stack
+
+  save_stack_lts-13_cache: &save_stack_lts-13_cache
+    save_cache:
+      key: *lts-13_cache_key
+      paths:
+        - ~/.stack
+
   # lts-12
 
-  lts-11_cache_key: &lts-12_cache_key
-    v2-stack-lts-12-{{ checksum "package.yaml" }}
+  lts-12_cache_key: &lts-12_cache_key
+    v3-stack-lts-12-{{ checksum "package.yaml" }}
 
   restore_stack_lts-12_cache: &restore_stack_lts-12_cache
     restore_cache:
       keys:
         - *lts-12_cache_key
-        - v2-stack
+        - v3-stack
 
   save_stack_lts-12_cache: &save_stack_lts-12_cache
     save_cache:
@@ -72,13 +108,13 @@ references:
   # lts-11
 
   lts-11_cache_key: &lts-11_cache_key
-    v2-stack-lts-11-{{ checksum "package.yaml" }}
+    v3-stack-lts-11-{{ checksum "package.yaml" }}
 
   restore_stack_lts-11_cache: &restore_stack_lts-11_cache
     restore_cache:
       keys:
         - *lts-11_cache_key
-        - v2-stack
+        - v3-stack
 
   save_stack_lts-11_cache: &save_stack_lts-11_cache
     save_cache:
@@ -89,13 +125,13 @@ references:
   # lts-10
 
   lts-10_cache_key: &lts-10_cache_key
-    v2-stack-lts-10-{{ checksum "package.yaml" }}
+    v3-stack-lts-10-{{ checksum "package.yaml" }}
 
   restore_stack_lts-10_cache: &restore_stack_lts-10_cache
     restore_cache:
       keys:
         - *lts-10_cache_key
-        - v2-stack
+        - v3-stack
 
   save_stack_lts-10_cache: &save_stack_lts-10_cache
     save_cache:
@@ -106,13 +142,13 @@ references:
   # lts-9
 
   lts-9_cache_key: &lts-9_cache_key
-    v2-stack-lts-9-{{ checksum "package.yaml" }}
+    v3-stack-lts-9-{{ checksum "package.yaml" }}
 
   restore_stack_lts-9_cache: &restore_stack_lts-9_cache
     restore_cache:
       keys:
         - *lts-9_cache_key
-        - v2-stack
+        - v3-stack
 
   save_stack_lts-9_cache: &save_stack_lts-9_cache
     save_cache:
@@ -123,16 +159,16 @@ references:
 jobs:
   build:
     docker:
-      - image: fpco/stack-build:lts-12.9
+      - image: fpco/stack-build:lts-14.22
     environment:
-      STACK_ARGS: "--jobs 2"
+      STACK_ARGS: "--no-terminal --jobs 2"
     steps:
       - checkout
       - *restore_stack_default_cache
       - run: stack setup $STACK_ARGS
-      - run: stack install $STACK_ARGS --only-dependencies --test --no-run-tests
+      - run: stack install $STACK_ARGS --only-dependencies --fast
       - *save_stack_default_cache
-      - run: stack test --no-terminal
+      - run: stack test $STACK_ARGS
 
   build-nightly:
     docker:
@@ -143,8 +179,34 @@ jobs:
       - checkout
       - *restore_stack_nightly_cache
       - run: stack setup $STACK_ARGS
-      - run: stack install $STACK_ARGS --only-dependencies --test --no-run-tests
+      - run: stack install $STACK_ARGS --only-dependencies --fast
       - *save_stack_nightly_cache
+      - run: stack test $STACK_ARGS
+
+  build-lts-14:
+    docker:
+      - image: fpco/stack-build:lts-14
+    environment:
+      STACK_ARGS: "--resolver lts-14 --no-terminal --jobs 2"
+    steps:
+      - checkout
+      - *restore_stack_lts-14_cache
+      - run: stack setup $STACK_ARGS
+      - run: stack install $STACK_ARGS --only-dependencies --fast
+      - *save_stack_lts-14_cache
+      - run: stack test $STACK_ARGS
+
+  build-lts-13:
+    docker:
+      - image: fpco/stack-build:lts-13
+    environment:
+      STACK_ARGS: "--resolver lts-13 --no-terminal --jobs 2"
+    steps:
+      - checkout
+      - *restore_stack_lts-13_cache
+      - run: stack setup $STACK_ARGS
+      - run: stack install $STACK_ARGS --only-dependencies --fast
+      - *save_stack_lts-13_cache
       - run: stack test $STACK_ARGS
 
   build-lts-12:
@@ -156,7 +218,7 @@ jobs:
       - checkout
       - *restore_stack_lts-12_cache
       - run: stack setup $STACK_ARGS
-      - run: stack install $STACK_ARGS --only-dependencies --test --no-run-tests
+      - run: stack install $STACK_ARGS --only-dependencies --fast
       - *save_stack_lts-12_cache
       - run: stack test $STACK_ARGS
 
@@ -169,7 +231,7 @@ jobs:
       - checkout
       - *restore_stack_lts-11_cache
       - run: stack setup $STACK_ARGS
-      - run: stack install $STACK_ARGS --only-dependencies --test --no-run-tests
+      - run: stack install $STACK_ARGS --only-dependencies --fast
       - *save_stack_lts-11_cache
       - run: stack test $STACK_ARGS
 
@@ -182,7 +244,7 @@ jobs:
       - checkout
       - *restore_stack_lts-10_cache
       - run: stack setup $STACK_ARGS
-      - run: stack install $STACK_ARGS --only-dependencies --test --no-run-tests
+      - run: stack install $STACK_ARGS --only-dependencies --fast
       - *save_stack_lts-10_cache
       - run: stack test $STACK_ARGS
 
@@ -195,6 +257,6 @@ jobs:
       - checkout
       - *restore_stack_lts-9_cache
       - run: stack setup $STACK_ARGS
-      - run: stack install $STACK_ARGS --only-dependencies --test --no-run-tests
+      - run: stack install $STACK_ARGS --only-dependencies --fast
       - *save_stack_lts-9_cache
       - run: stack test $STACK_ARGS
