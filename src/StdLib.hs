@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -159,6 +160,10 @@ module StdLib (
     , (P.$!)
     , P.minBound
     , P.maxBound
+
+#if __GLASGOW_HASKELL__ >= 808
+    , MonadFail(..)
+#endif
 
     , module X
     ) where
