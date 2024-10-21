@@ -225,15 +225,17 @@ import           Data.Int as X
 import           Data.IntMap as X (IntMap)
 import           Data.IntSet as X (IntSet)
 import           Data.List as X (break, drop, filter, intercalate, isPrefixOf,
-                                 replicate, reverse, sortBy, splitAt, take)
+                                 replicate, reverse, sortBy, splitAt, take,
+                                 (++))
 import           Data.List.NonEmpty as X (NonEmpty (..), nonEmpty)
 import           Data.Map as X (Map)
 import           Data.Maybe as X hiding (fromJust)
 import           Data.Monoid as X hiding ((<>))
-import           Data.Ord as X
+import           Data.Ord as X hiding (clamp)
 import           Data.Semigroup as X hiding (First, Last, getFirst, getLast)
 import           Data.Sequence as X (Seq)
 import           Data.Set as X (Set)
+import           Data.String as X (String)
 import           Data.Text as X (Text)
 import           Data.Time as X
 import           Data.Time.Clock.POSIX
